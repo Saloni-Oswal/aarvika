@@ -5,8 +5,6 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { useMutation } from "@tanstack/react-query";
-import { apiRequest } from "@/lib/queryClient";
 
 interface BookingFormData {
   fullName: string;
@@ -30,34 +28,33 @@ export default function Booking() {
     condition: ""
   });
 
-  const bookingMutation = useMutation({
-    mutationFn: async (data: BookingFormData) => {
-      const response = await apiRequest("POST", "/api/appointments", data);
-      return response.json();
-    },
-    onSuccess: () => {
-      toast({
-        title: "Appointment Booked",
-        description: "Thank you for your appointment request! We will contact you soon to confirm.",
-      });
-      setFormData({
-        fullName: "",
-        phoneNumber: "",
-        email: "",
-        serviceType: "",
-        preferredDate: "",
-        preferredTime: "",
-        condition: ""
-      });
-    },
-    onError: () => {
-      toast({
-        title: "Booking Failed",
-        description: "There was an error booking your appointment. Please try again.",
-        variant: "destructive",
-      });
-    },
-  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleBooking = async (data: BookingFormData) => {
+    setIsSubmitting(true);
+    
+    // Simulate form submission delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    // Show success message
+    toast({
+      title: "Appointment Request Received",
+      description: "Thank you for your appointment request! We will contact you soon to confirm.",
+    });
+    
+    // Reset form
+    setFormData({
+      fullName: "",
+      phoneNumber: "",
+      email: "",
+      serviceType: "",
+      preferredDate: "",
+      preferredTime: "",
+      condition: ""
+    });
+    
+    setIsSubmitting(false);
+  };
 
   const handleInputChange = (field: keyof BookingFormData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -65,7 +62,7 @@ export default function Booking() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    bookingMutation.mutate(formData);
+    handleBooking(formData);
   };
 
   return (
@@ -184,11 +181,11 @@ export default function Booking() {
             <div className="md:col-span-2 text-center">
               <Button 
                 type="submit"
-                disabled={bookingMutation.isPending}
+                disabled={isSubmitting}
                 className="bg-primary text-primary-foreground px-8 py-4 text-lg font-semibold hover:bg-primary/90"
                 data-testid="button-schedule-appointment"
               >
-                {bookingMutation.isPending ? "Scheduling..." : "Schedule Appointment"}
+                {isSubmitting ? "Scheduling..." : "Schedule Appointment"}
               </Button>
               <p className="text-muted-foreground text-sm mt-4">
                 We'll contact you within 24 hours to confirm your appointment

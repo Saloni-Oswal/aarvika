@@ -4,8 +4,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { useMutation } from "@tanstack/react-query";
-import { apiRequest } from "@/lib/queryClient";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 
 interface ContactFormData {
@@ -24,31 +22,30 @@ export default function Contact() {
     message: ""
   });
 
-  const contactMutation = useMutation({
-    mutationFn: async (data: ContactFormData) => {
-      const response = await apiRequest("POST", "/api/contact", data);
-      return response.json();
-    },
-    onSuccess: () => {
-      toast({
-        title: "Message Sent",
-        description: "Thank you for your message! We will get back to you within 24 hours.",
-      });
-      setFormData({
-        name: "",
-        email: "",
-        subject: "",
-        message: ""
-      });
-    },
-    onError: () => {
-      toast({
-        title: "Message Failed",
-        description: "There was an error sending your message. Please try again.",
-        variant: "destructive",
-      });
-    },
-  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleContact = async (data: ContactFormData) => {
+    setIsSubmitting(true);
+    
+    // Simulate form submission delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    // Show success message
+    toast({
+      title: "Message Received",
+      description: "Thank you for your message! We will get back to you within 24 hours.",
+    });
+    
+    // Reset form
+    setFormData({
+      name: "",
+      email: "",
+      subject: "",
+      message: ""
+    });
+    
+    setIsSubmitting(false);
+  };
 
   const handleInputChange = (field: keyof ContactFormData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -56,7 +53,7 @@ export default function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    contactMutation.mutate(formData);
+    handleContact(formData);
   };
 
   const contactInfo = [
@@ -184,11 +181,11 @@ export default function Contact() {
                 </div>
                 <Button 
                   type="submit"
-                  disabled={contactMutation.isPending}
+                  disabled={isSubmitting}
                   className="w-full bg-primary text-primary-foreground py-3 font-semibold hover:bg-primary/90"
                   data-testid="button-send-message"
                 >
-                  {contactMutation.isPending ? "Sending..." : "Send Message"}
+                  {isSubmitting ? "Sending..." : "Send Message"}
                 </Button>
               </form>
             </div>
