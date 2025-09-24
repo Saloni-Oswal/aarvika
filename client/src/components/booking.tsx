@@ -2,68 +2,11 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/hooks/use-toast";
-
-interface BookingFormData {
-  fullName: string;
-  phoneNumber: string;
-  email: string;
-  serviceType: string;
-  preferredDate: string;
-  preferredTime: string;
-  condition: string;
-}
 
 export default function Booking() {
-  const { toast } = useToast();
-  const [formData, setFormData] = useState<BookingFormData>({
-    fullName: "",
-    phoneNumber: "",
-    email: "",
-    serviceType: "",
-    preferredDate: "",
-    preferredTime: "",
-    condition: ""
-  });
-
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleBooking = async (data: BookingFormData) => {
-    setIsSubmitting(true);
-    
-    // Simulate form submission delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Show success message
-    toast({
-      title: "Appointment Request Received",
-      description: "Thank you for your appointment request! We will contact you soon to confirm.",
-    });
-    
-    // Reset form
-    setFormData({
-      fullName: "",
-      phoneNumber: "",
-      email: "",
-      serviceType: "",
-      preferredDate: "",
-      preferredTime: "",
-      condition: ""
-    });
-    
-    setIsSubmitting(false);
-  };
-
-  const handleInputChange = (field: keyof BookingFormData, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    handleBooking(formData);
-  };
+  const [selectedService, setSelectedService] = useState("");
 
   return (
     <section id="booking" className="py-20 bg-muted" data-testid="booking-section">
@@ -77,16 +20,29 @@ export default function Booking() {
           </p>
         </div>
         <div className="bg-card rounded-2xl p-8 shadow-lg">
-          <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6" data-testid="booking-form">
+          <form 
+            action="https://formsubmit.co/info@aarvikaphysio.com" 
+            method="POST"
+            className="grid grid-cols-1 md:grid-cols-2 gap-6" 
+            data-testid="booking-form"
+            onSubmit={() => setIsSubmitting(true)}
+          >
+            {/* FormSubmit Configuration */}
+            <input type="hidden" name="_subject" value="New Appointment Request - Aarvika Physiotherapy" />
+            <input type="hidden" name="_next" value="https://formsubmit.co/thankyou.html" />
+            <input type="hidden" name="_template" value="table" />
+            
+            {/* Honeypot anti-spam field */}
+            <input type="text" name="_honey" style={{display: "none"}} tabIndex={-1} autoComplete="off" />
+            
             <div>
               <Label htmlFor="fullName" className="block text-foreground font-semibold mb-2">
                 Full Name *
               </Label>
               <Input
                 id="fullName"
+                name="Full Name"
                 type="text"
-                value={formData.fullName}
-                onChange={(e) => handleInputChange("fullName", e.target.value)}
                 placeholder="Enter your full name"
                 required
                 data-testid="input-fullName"
@@ -98,10 +54,10 @@ export default function Booking() {
               </Label>
               <Input
                 id="phoneNumber"
+                name="Phone Number"
                 type="tel"
-                value={formData.phoneNumber}
-                onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
-                placeholder="Enter your phone number"
+                placeholder="Enter your phone number (e.g., 555-123-4567)"
+                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                 required
                 data-testid="input-phoneNumber"
               />
@@ -112,10 +68,10 @@ export default function Booking() {
               </Label>
               <Input
                 id="email"
+                name="email"
                 type="email"
-                value={formData.email}
-                onChange={(e) => handleInputChange("email", e.target.value)}
                 placeholder="Enter your email"
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                 required
                 data-testid="input-email"
               />
@@ -124,19 +80,23 @@ export default function Booking() {
               <Label htmlFor="serviceType" className="block text-foreground font-semibold mb-2">
                 Service Type *
               </Label>
-              <Select value={formData.serviceType} onValueChange={(value) => handleInputChange("serviceType", value)} required>
-                <SelectTrigger data-testid="select-serviceType">
-                  <SelectValue placeholder="Select a service" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="sports">Sports Physiotherapy</SelectItem>
-                  <SelectItem value="orthopedic">Orthopedic Rehabilitation</SelectItem>
-                  <SelectItem value="neurological">Neurological Physiotherapy</SelectItem>
-                  <SelectItem value="pediatric">Pediatric Physiotherapy</SelectItem>
-                  <SelectItem value="manual">Manual Therapy</SelectItem>
-                  <SelectItem value="cardio">Cardiopulmonary Rehab</SelectItem>
-                </SelectContent>
-              </Select>
+              <select 
+                id="serviceType"
+                name="Service Type"
+                value={selectedService}
+                onChange={(e) => setSelectedService(e.target.value)}
+                required
+                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                data-testid="select-serviceType"
+              >
+                <option value="">Select a service</option>
+                <option value="Sports Physiotherapy">Sports Physiotherapy</option>
+                <option value="Orthopedic Rehabilitation">Orthopedic Rehabilitation</option>
+                <option value="Neurological Physiotherapy">Neurological Physiotherapy</option>
+                <option value="Pediatric Physiotherapy">Pediatric Physiotherapy</option>
+                <option value="Manual Therapy">Manual Therapy</option>
+                <option value="Cardiopulmonary Rehab">Cardiopulmonary Rehab</option>
+              </select>
             </div>
             <div>
               <Label htmlFor="preferredDate" className="block text-foreground font-semibold mb-2">
@@ -144,9 +104,8 @@ export default function Booking() {
               </Label>
               <Input
                 id="preferredDate"
+                name="Preferred Date"
                 type="date"
-                value={formData.preferredDate}
-                onChange={(e) => handleInputChange("preferredDate", e.target.value)}
                 data-testid="input-preferredDate"
               />
             </div>
@@ -154,16 +113,17 @@ export default function Booking() {
               <Label htmlFor="preferredTime" className="block text-foreground font-semibold mb-2">
                 Preferred Time
               </Label>
-              <Select value={formData.preferredTime} onValueChange={(value) => handleInputChange("preferredTime", value)}>
-                <SelectTrigger data-testid="select-preferredTime">
-                  <SelectValue placeholder="Select time" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="morning">Morning (9AM - 12PM)</SelectItem>
-                  <SelectItem value="afternoon">Afternoon (12PM - 5PM)</SelectItem>
-                  <SelectItem value="evening">Evening (5PM - 7PM)</SelectItem>
-                </SelectContent>
-              </Select>
+              <select 
+                id="preferredTime"
+                name="Preferred Time"
+                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                data-testid="select-preferredTime"
+              >
+                <option value="">Select time</option>
+                <option value="Morning (9AM - 12PM)">Morning (9AM - 12PM)</option>
+                <option value="Afternoon (12PM - 5PM)">Afternoon (12PM - 5PM)</option>
+                <option value="Evening (5PM - 7PM)">Evening (5PM - 7PM)</option>
+              </select>
             </div>
             <div className="md:col-span-2">
               <Label htmlFor="condition" className="block text-foreground font-semibold mb-2">
@@ -171,9 +131,8 @@ export default function Booking() {
               </Label>
               <Textarea
                 id="condition"
+                name="Condition Details"
                 rows={4}
-                value={formData.condition}
-                onChange={(e) => handleInputChange("condition", e.target.value)}
                 placeholder="Please describe your symptoms, injury, or reason for seeking physiotherapy..."
                 data-testid="textarea-condition"
               />
