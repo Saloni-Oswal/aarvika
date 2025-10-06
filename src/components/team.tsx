@@ -27,27 +27,25 @@ export default function Team() {
             className='text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed'
             data-testid='team-subtitle'
           >
-            Dr. Rashmi brings 9+ years of experience and specialized training to
-            provide you with the best possible care. From an early age, I was
-            drawn to the medical field and inspired by a deep desire to serve
-            others. Growing up with a father who is a dedicated medical
-            professional, I was naturally influenced by his work and the impact
-            he made in people's lives. This early exposure, combined with my
-            keen interest in biology, motivated me to pursue a career in
-            healthcare. After completing my 10+2 with a focus on science, I
-            appeared for CET and NEET, and chose to specialize in Physiotherapy.
-            I earned my Bachelor's degree in Physiotherapy from NDMVP’s College
-            of Physiotherapy, followed by a Master’s degree in Musculoskeletal
-            Sciences from the same institution. To further enhance my clinical
-            skills, I completed a Fellowship in Osteopathic Manual Techniques
-            (FOMT) from SBS University, Dehradun. I have also received advanced
-            training in Dry Needling, Kinesio Taping, Fascial Manipulation,
-            Spinal Mobilization, and am a certified provider of Blood Flow
-            Restriction Therapy (BFRT). Over the years, I’ve gained valuable
-            experience working alongside reputed physiotherapists and orthopedic
-            surgeons in Nashik. My clinical expertise includes managing a wide
-            range of post-operative rehabilitation cases such as Total Knee
-            Replacement (TKR), Total Hip Replacement (THR), ACL/PCL
+            From an early age, I was drawn to the medical field and inspired by
+            a deep desire to serve others. Growing up with a father who is a
+            dedicated medical professional, I was naturally influenced by his
+            work and the impact he made in people's lives. This early exposure,
+            combined with my keen interest in biology, motivated me to pursue a
+            career in healthcare. After completing my 10+2 with a focus on
+            science, I appeared for CET and NEET, and chose to specialize in
+            Physiotherapy. I earned my Bachelor's degree in Physiotherapy from
+            NDMVP’s College of Physiotherapy, followed by a Master’s degree in
+            Musculoskeletal Sciences from the same institution. To further
+            enhance my clinical skills, I completed a Fellowship in Osteopathic
+            Manual Techniques (FOMT) from SBS University, Dehradun. I have also
+            received advanced training in Dry Needling, Kinesio Taping, Fascial
+            Manipulation, Spinal Mobilization, and am a certified provider of
+            Blood Flow Restriction Therapy (BFRT). Over the years, I’ve gained
+            valuable experience working alongside reputed physiotherapists and
+            orthopedic surgeons in Nashik. My clinical expertise includes
+            managing a wide range of post-operative rehabilitation cases such as
+            Total Knee Replacement (TKR), Total Hip Replacement (THR), ACL/PCL
             Reconstruction, Meniscus Repairs, Spinal Surgeries, High Tibial
             Osteotomy (HTO), Rotator Cuff Repairs, and other post-fracture
             surgical recoveries. With a patient-centered approach, I strive to
