@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "type": "module",
   "license": "MIT",
+  "homepage": "https://saloni-oswal.github.io/aarvika/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "start": "NODE_ENV=production node",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "check": "tsc"
   },
   "dependencies": {
@@ -72,12 +75,14 @@
     "autoprefixer": "^10.4.20",
     "clsx": "^2.1.1",
     "esbuild": "^0.25.0",
+    "gh-pages": "^6.3.0",
     "postcss": "^8.4.47",
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "^3.4.17",
     "tsx": "^4.20.5",
     "typescript": "5.6.3",
-    "vite": "^5.4.20"
+    "vite": "^5.4.20",
+    "vite-plugin-webfont-dl": "^3.11.1"
   },
   "optionalDependencies": {
     "bufferutil": "^4.0.8"
