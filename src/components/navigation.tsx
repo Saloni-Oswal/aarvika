@@ -6,15 +6,20 @@ import { scrollToSection } from "@/lib/utils";
 type NavigationItemType = {
   id: string;
   title: string;
+  isMobileMenu?: boolean;
 };
 
-const NavigationItem = ({ id, title }: NavigationItemType) => {
+const NavigationItem = ({ id, title, isMobileMenu }: NavigationItemType) => {
+  const mobileMenuClasses =
+    "block w-full text-left px-3 py-2 text-foreground hover:text-primary";
+  const classes =
+    "text-foreground hover:text-primary transition-colors duration-300";
   return (
     <button
       onClick={() => {
         scrollToSection(id);
       }}
-      className='text-foreground hover:text-primary transition-colors duration-300'
+      className={isMobileMenu ? mobileMenuClasses : classes}
       data-testid='nav-home'
     >
       {title}
@@ -73,7 +78,12 @@ export default function Navigation() {
           <div className='md:hidden' data-testid='mobile-menu'>
             <div className='px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-card border-t'>
               {NAVIGATION_ITEMS.map(({ id, title }) => (
-                <NavigationItem key={id} id={id} title={title}></NavigationItem>
+                <NavigationItem
+                  key={id}
+                  id={id}
+                  title={title}
+                  isMobileMenu={true}
+                ></NavigationItem>
               ))}
             </div>
           </div>
