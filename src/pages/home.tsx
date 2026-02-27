@@ -10,7 +10,7 @@ import Footer from "@/components/footer";
 
 export default function Home() {
   return (
-    <div className='bg-background text-foreground font-century'>
+    <div className='w-full bg-background text-foreground font-century'>
       <Navigation />
       <Hero />
       <About />

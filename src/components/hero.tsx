@@ -1,41 +1,35 @@
 import { Button } from "@/components/ui/button";
+import { scrollToSection } from "@/lib/utils";
 
 export default function Hero() {
   const BASE_URL = import.meta.env.BASE_URL;
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
   return (
     <section
       id='home'
-      className='hero-gradient text-white pt-16 pb-20 fade-in'
+      className='hero-gradient text-white fade-in relative mt-20 scroll-mt-20'
       data-testid='hero-section'
     >
-      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-        <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[600px]'>
+      <div className='max-w-7xl mx-auto p-4 sm:p-6 lg:p-8'>
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 items-center'>
           <div className='text-center lg:text-left'>
             <h1
-              className='text-4xl md:text-6xl font-bold mb-6 leading-tight'
+              className='text-lg md:text-6xl font-bold mb-4 md:mb-8 leading-tight'
               data-testid='hero-title'
             >
               Professional Physiotherapy for Your Health & Recovery
             </h1>
             <p
-              className='text-xl md:text-2xl mb-8 text-white/90 leading-relaxed'
+              className='text-sm md:text-2xl mb-4 md:mb-8 text-white/90 leading-relaxed'
               data-testid='hero-description'
             >
               Expert care and personalized treatment plans to help you move
               better, feel stronger, and live pain-free.
             </p>
-            <div className='flex flex-col sm:flex-row gap-4 justify-center lg:justify-start'>
+            <div className='flex flex-row gap-2 md:gap-4 justify-center lg:justify-start'>
               <Button
                 onClick={() => scrollToSection("contact")}
-                className='bg-white text-primary px-8 py-4 text-lg font-semibold hover:bg-white/90'
+                className='bg-white text-primary px-8 py-4 text-sm md:text-lg font-semibold hover:bg-white/90'
                 data-testid='hero-book-consultation'
               >
                 Contact
@@ -43,19 +37,19 @@ export default function Hero() {
               <Button
                 onClick={() => scrollToSection("services")}
                 variant='outline'
-                className='border-2 border-white text-primary px-8 py-4 text-lg font-semibold hover:bg-white/90 hover:text-primary'
+                className='border-2 border-white text-primary px-8 py-4 text-sm md:text-lg font-semibold hover:bg-white/90 hover:text-primary'
                 data-testid='hero-our-services'
               >
                 Services Offered
               </Button>
             </div>
           </div>
-          <div className='text-center'>
+          <div className='flex justify-center lg:justify-end w-[100%]'>
             <img
               src={`${BASE_URL}logo.jpg`}
               // src={`${BASE_URL}logo_transparent.png`}
               alt='Modern physiotherapy clinic interior'
-              // className='rounded-2xl shadow-2xl w-full h-auto'
+              className='rounded-2xl shadow-2xl'
               data-testid='hero-image'
             />
           </div>
