@@ -14,19 +14,19 @@ export default function Hero() {
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 items-center'>
           <div className='text-center lg:text-left'>
             <h1
-              className='text-lg md:text-6xl font-bold mb-4 md:mb-8 leading-tight'
+              className='text-lg md:text-5xl font-bold mb-4 md:mb-12 leading-tight'
               data-testid='hero-title'
             >
               Professional Physiotherapy for Your Health & Recovery
             </h1>
             <p
-              className='text-sm md:text-2xl mb-4 md:mb-8 text-white/90 leading-relaxed'
+              className='text-sm md:text-2xl mb-4 md:mb-10 text-white/90 leading-relaxed'
               data-testid='hero-description'
             >
               Expert care and personalized treatment plans to help you move
               better, feel stronger, and live pain-free.
             </p>
-            <div className='flex flex-row gap-2 md:gap-4 justify-center lg:justify-start'>
+            <div className='flex flex-row gap-2 md:gap-12 justify-center lg:justify-start'>
               <Button
                 onClick={() => scrollToSection("contact")}
                 className='bg-white text-primary px-8 py-4 text-sm md:text-lg font-semibold hover:bg-white/90'
