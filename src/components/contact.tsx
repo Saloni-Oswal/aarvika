@@ -24,8 +24,6 @@ interface ContactFormData {
 
 export default function Contact() {
   const { toast } = useToast();
-  const [selectedService, setSelectedService] = useState("");
-
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
@@ -33,9 +31,7 @@ export default function Contact() {
     service: "",
     message: "",
   });
-
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const FORMSPREE_ENDPOINT = "https://formspree.io/f/xpwywaov";
 
   const handleContact = async (data: ContactFormData) => {
@@ -128,7 +124,7 @@ export default function Contact() {
     handleContact(formData);
   };
 
-  const contactInfo = [
+  const CONTACT_INFO = [
     {
       icon: MapPin,
       title: "Location",
@@ -155,7 +151,7 @@ export default function Contact() {
       icon: Clock,
       title: "Hours",
       content: [
-        "Monday - Saturday: 10:00 AM - 1:00 PM | 4:00 PM - 7:00 PM",
+        "Monday - Saturday: 10:00 AM - 1:00 PM | 5:00 PM - 9:00 PM",
         "Sunday: Closed",
       ],
       bgColor: "bg-accent",
@@ -165,42 +161,42 @@ export default function Contact() {
   return (
     <section
       id='contact'
-      className='py-20 bg-background'
+      className='bg-muted scroll-mt-20'
       data-testid='contact-section'
     >
-      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-        <div className='text-center mb-16'>
+      <div className='max-w-7xl mx-auto p-4 sm:px-6 md:px-8 md:py-10'>
+        <div className='text-center mb-4 md:mb-16'>
           <h2
-            className='text-3xl md:text-5xl font-bold text-foreground mb-6'
+            className='text-2xl md:text-5xl font-bold text-foreground mb-2 md:mb-6 text-center'
             data-testid='contact-title'
           >
             Contact
           </h2>
           <p
-            className='text-xl text-muted-foreground leading-relaxed'
+            className='text-sm md:text-xl text-muted-foreground leading-relaxed'
             data-testid='contact-subtitle'
           >
             Relieving your pain is my priority. Send me a message and I’ll be in
             touch shortly.
           </p>
         </div>
-        <div className='grid grid-cols-1 lg:grid-cols-2 gap-16'>
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16'>
           <div>
-            <div className='space-y-8'>
-              {contactInfo.map((info, index) => (
+            <div className='space-y-4 md:space-y-8'>
+              {CONTACT_INFO.map((info, index) => (
                 <div
                   key={index}
                   className='flex items-start'
                   data-testid={`contact-info-${index}`}
                 >
                   <div
-                    className={`${info.bgColor} text-white rounded-full p-3 mr-4 mt-1`}
+                    className={`${info.bgColor} text-white rounded-full p-2 md:p-3 mr-3 md:mr-4 md:mt-1`}
                   >
-                    <info.icon size={24} />
+                    <info.icon className='w-4 h-4 md:w-8 md:h-8' />
                   </div>
                   <div>
                     <h3
-                      className='text-xl font-bold text-foreground mb-2'
+                      className='text-sm md:text-xl font-bold text-foreground md:mb-2'
                       data-testid={`contact-info-title-${index}`}
                     >
                       {info.title}
@@ -208,6 +204,7 @@ export default function Contact() {
                     <div className='text-muted-foreground leading-relaxed'>
                       {info.content.map((line, lineIndex) => (
                         <p
+                          className='text-sm md:text-xl'
                           key={lineIndex}
                           data-testid={`contact-info-content-${index}-${lineIndex}`}
                         >
@@ -221,16 +218,16 @@ export default function Contact() {
             </div>
           </div>
           <div>
-            <div className='bg-card rounded-2xl p-8 shadow-lg'>
+            <div className='bg-card rounded-2xl  p-4 md:p-8 shadow-lg'>
               <h3
-                className='text-2xl font-bold text-foreground mb-6'
+                className='text-2xl font-bold text-foreground mb-4 md:mb-6 text-center md:text-left'
                 data-testid='contact-form-title'
               >
                 Send a Message
               </h3>
               <form
                 onSubmit={handleSubmit}
-                className='space-y-6'
+                className='space-y-4 md:space-y-6'
                 data-testid='contact-form'
               >
                 <div>
@@ -324,36 +321,6 @@ export default function Contact() {
                       </SelectItem>
                     </SelectContent>
                   </Select>
-
-                  {/* <select
-                    id='serviceType'
-                    name='Service Type'
-                    value={formData.service}
-                    onChange={(e) =>
-                      handleInputChange("service", e.target.value)
-                    }
-                    className='flex h-9 w-full rounded-md border border-input px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
-                    data-testid='select-serviceType'
-                  >
-                    <option value=''>Select a service</option>
-                    <option value='Sports Physiotherapy'>
-                      Sports Physiotherapy
-                    </option>
-                    <option value='Orthopedic Rehabilitation'>
-                      Orthopedic Rehabilitation
-                    </option>
-                    <option value='Neurological Physiotherapy'>
-                      Neurological Physiotherapy
-                    </option>
-                    <option value='Pediatric Physiotherapy'>
-                      Pediatric Physiotherapy
-                    </option>
-                    <option value='Manual Therapy'>Manual Therapy</option>
-                    <option value='Cardiopulmonary Rehab'>
-                      Cardiopulmonary Rehab
-                    </option>
-                    <option value='Other'>Other</option>
-                  </select> */}
                 </div>
                 <div>
                   <Label
