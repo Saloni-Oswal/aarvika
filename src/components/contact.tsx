@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -17,8 +16,8 @@ import { useToast } from "@/hooks/use-toast";
 interface ContactFormData {
   name: string;
   email: string;
-  subject: string;
-  service: string;
+  subject?: string;
+  service?: string;
   message: string;
 }
 
@@ -181,176 +180,164 @@ export default function Contact() {
           </p>
         </div>
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16'>
-          <div>
-            <div className='space-y-4 md:space-y-8'>
-              {CONTACT_INFO.map((info, index) => (
+          <div className='space-y-4 md:space-y-8'>
+            {CONTACT_INFO.map((info, index) => (
+              <div
+                key={index}
+                className='flex items-start'
+                data-testid={`contact-info-${index}`}
+              >
                 <div
-                  key={index}
-                  className='flex items-start'
-                  data-testid={`contact-info-${index}`}
+                  className={`${info.bgColor} text-white rounded-full p-2 md:p-3 mr-3 md:mr-4 md:mt-1`}
                 >
-                  <div
-                    className={`${info.bgColor} text-white rounded-full p-2 md:p-3 mr-3 md:mr-4 md:mt-1`}
+                  <info.icon className='w-4 h-4 md:w-8 md:h-8' />
+                </div>
+                <div>
+                  <h3
+                    className='text-sm md:text-xl font-bold text-foreground md:mb-2'
+                    data-testid={`contact-info-title-${index}`}
                   >
-                    <info.icon className='w-4 h-4 md:w-8 md:h-8' />
-                  </div>
-                  <div>
-                    <h3
-                      className='text-sm md:text-xl font-bold text-foreground md:mb-2'
-                      data-testid={`contact-info-title-${index}`}
-                    >
-                      {info.title}
-                    </h3>
-                    <div className='text-muted-foreground leading-relaxed'>
-                      {info.content.map((line, lineIndex) => (
-                        <p
-                          className='text-sm md:text-xl'
-                          key={lineIndex}
-                          data-testid={`contact-info-content-${index}-${lineIndex}`}
-                        >
-                          {line}
-                        </p>
-                      ))}
-                    </div>
+                    {info.title}
+                  </h3>
+                  <div className='text-muted-foreground leading-relaxed'>
+                    {info.content.map((line, lineIndex) => (
+                      <p
+                        className='text-sm md:text-xl'
+                        key={lineIndex}
+                        data-testid={`contact-info-content-${index}-${lineIndex}`}
+                      >
+                        {line}
+                      </p>
+                    ))}
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
-          <div>
-            <div className='bg-card rounded-2xl  p-4 md:p-8 shadow-lg'>
-              <h3
-                className='text-2xl font-bold text-foreground mb-4 md:mb-6 text-center md:text-left'
-                data-testid='contact-form-title'
-              >
-                Send a Message
-              </h3>
-              <form
-                onSubmit={handleSubmit}
-                className='space-y-4 md:space-y-6'
-                data-testid='contact-form'
-              >
-                <div>
-                  <Label
-                    htmlFor='name'
-                    className='block text-foreground font-semibold mb-2'
-                  >
-                    Name *
-                  </Label>
-                  <Input
-                    id='name'
-                    type='text'
-                    value={formData.name}
-                    onChange={(e) => handleInputChange("name", e.target.value)}
-                    placeholder='Your name'
-                    required
-                    data-testid='input-name'
-                  />
-                </div>
-                <div>
-                  <Label
-                    htmlFor='email'
-                    className='block text-foreground font-semibold mb-2'
-                  >
-                    Email *
-                  </Label>
-                  <Input
-                    id='email'
-                    type='email'
-                    value={formData.email}
-                    onChange={(e) => handleInputChange("email", e.target.value)}
-                    placeholder='Your email'
-                    required
-                    data-testid='input-email'
-                  />
-                </div>
-                <div>
-                  <Label
-                    htmlFor='subject'
-                    className='block text-foreground font-semibold mb-2'
-                  >
-                    Subject
-                  </Label>
-                  <Input
-                    id='subject'
-                    type='text'
-                    value={formData.subject}
-                    onChange={(e) =>
-                      handleInputChange("subject", e.target.value)
-                    }
-                    placeholder='Message subject'
-                    data-testid='input-subject'
-                  />
-                </div>
-                <div>
-                  <Label
-                    htmlFor='serviceType'
-                    className='block text-foreground font-semibold mb-2'
-                  >
-                    Service Type
-                  </Label>
-                  <Select
-                    onValueChange={(value) =>
-                      handleInputChange("service", value)
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder='Select a service' />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value='unassigned'>
-                        Select a service
-                      </SelectItem>
-                      <SelectItem value='Sports Physiotherapy'>
-                        Sports Physiotherapy
-                      </SelectItem>
-                      <SelectItem value='Orthopedic Rehabilitation'>
-                        Orthopedic Rehabilitation
-                      </SelectItem>
-                      <SelectItem value='Pediatric Physiotherapy'>
-                        Pediatric Physiotherapy
-                      </SelectItem>
-                      <SelectItem value='Neurological Physiotherapy'>
-                        Neurological Physiotherapy
-                      </SelectItem>
-                      <SelectItem value='Manual Therapy'>
-                        Manual Therapy
-                      </SelectItem>
-                      <SelectItem value='Cardiopulmonary Rehab'>
-                        Cardiopulmonary Rehab{" "}
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <Label
-                    htmlFor='message'
-                    className='block text-foreground font-semibold mb-2'
-                  >
-                    Message *
-                  </Label>
-                  <Textarea
-                    id='message'
-                    rows={5}
-                    value={formData.message}
-                    onChange={(e) =>
-                      handleInputChange("message", e.target.value)
-                    }
-                    placeholder='Your message'
-                    required
-                    data-testid='textarea-message'
-                  />
-                </div>
-                <Button
-                  type='submit'
-                  disabled={isSubmitting}
-                  className='w-full bg-primary text-primary-foreground py-3 font-semibold hover:bg-primary/90'
-                  data-testid='button-send-message'
+          <div className='bg-card rounded-2xl  p-4 md:p-8 shadow-lg'>
+            <h3
+              className='text-2xl font-bold text-foreground mb-4 md:mb-6 text-center md:text-left'
+              data-testid='contact-form-title'
+            >
+              Send a Message
+            </h3>
+            <form
+              onSubmit={handleSubmit}
+              className='space-y-4 md:space-y-6'
+              data-testid='contact-form'
+            >
+              <div>
+                <Label
+                  htmlFor='name'
+                  className='block text-foreground font-semibold mb-2'
                 >
-                  {isSubmitting ? "Sending..." : "Send Message"}
-                </Button>
-              </form>
-            </div>
+                  Name *
+                </Label>
+                <Input
+                  id='name'
+                  type='text'
+                  value={formData.name}
+                  onChange={(e) => handleInputChange("name", e.target.value)}
+                  placeholder='Your name'
+                  required
+                  data-testid='input-name'
+                />
+              </div>
+              <div>
+                <Label
+                  htmlFor='email'
+                  className='block text-foreground font-semibold mb-2'
+                >
+                  Email *
+                </Label>
+                <Input
+                  id='email'
+                  type='email'
+                  value={formData.email}
+                  onChange={(e) => handleInputChange("email", e.target.value)}
+                  placeholder='Your email'
+                  required
+                  data-testid='input-email'
+                />
+              </div>
+              <div>
+                <Label
+                  htmlFor='subject'
+                  className='block text-foreground font-semibold mb-2'
+                >
+                  Subject
+                </Label>
+                <Input
+                  id='subject'
+                  type='text'
+                  value={formData.subject}
+                  onChange={(e) => handleInputChange("subject", e.target.value)}
+                  placeholder='Message subject'
+                  data-testid='input-subject'
+                />
+              </div>
+              <div>
+                <Label
+                  htmlFor='serviceType'
+                  className='block text-foreground font-semibold mb-2'
+                >
+                  Service Type
+                </Label>
+                <Select
+                  onValueChange={(value) => handleInputChange("service", value)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder='Select a service' />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value='unassigned'>Select a service</SelectItem>
+                    <SelectItem value='Sports Physiotherapy'>
+                      Sports Physiotherapy
+                    </SelectItem>
+                    <SelectItem value='Orthopedic Rehabilitation'>
+                      Orthopedic Rehabilitation
+                    </SelectItem>
+                    <SelectItem value='Pediatric Physiotherapy'>
+                      Pediatric Physiotherapy
+                    </SelectItem>
+                    <SelectItem value='Neurological Physiotherapy'>
+                      Neurological Physiotherapy
+                    </SelectItem>
+                    <SelectItem value='Manual Therapy'>
+                      Manual Therapy
+                    </SelectItem>
+                    <SelectItem value='Cardiopulmonary Rehab'>
+                      Cardiopulmonary Rehab{" "}
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label
+                  htmlFor='message'
+                  className='block text-foreground font-semibold mb-2'
+                >
+                  Message *
+                </Label>
+                <Textarea
+                  id='message'
+                  rows={5}
+                  value={formData.message}
+                  onChange={(e) => handleInputChange("message", e.target.value)}
+                  placeholder='Your message'
+                  required
+                  data-testid='textarea-message'
+                />
+              </div>
+              <Button
+                type='submit'
+                disabled={isSubmitting}
+                className='w-full bg-primary text-primary-foreground py-3 font-semibold hover:bg-primary/90'
+                data-testid='button-send-message'
+              >
+                {isSubmitting ? "Sending..." : "Send Message"}
+              </Button>
+            </form>
           </div>
         </div>
       </div>
