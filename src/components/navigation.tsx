@@ -10,30 +10,6 @@ type NavigationItemType = {
   callback?: React.MouseEventHandler<HTMLButtonElement>;
 };
 
-const NavigationItem = ({
-  id,
-  title,
-  isMobileMenu,
-  callback,
-}: NavigationItemType) => {
-  const mobileMenuClasses =
-    "block w-full text-left px-3 py-2 text-foreground hover:text-primary";
-  const classes =
-    "text-foreground hover:text-primary transition-colors duration-300";
-  return (
-    <button
-      onClick={(event) => {
-        scrollToSection(id);
-        !!isMobileMenu && callback && callback(event);
-      }}
-      className={isMobileMenu ? mobileMenuClasses : classes}
-      data-testid='nav-home'
-    >
-      {title}
-    </button>
-  );
-};
-
 export default function Navigation() {
   const BASE_URL = import.meta.env.BASE_URL;
   const NAVIGATION_ITEMS = [
@@ -44,6 +20,30 @@ export default function Navigation() {
   ];
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const NavigationItem: React.FC<NavigationItemType> = ({
+    id,
+    title,
+    isMobileMenu,
+    callback,
+  }) => {
+    const mobileMenuClasses =
+      "block w-full text-left px-3 py-2 text-foreground hover:text-primary";
+    const classes =
+      "text-foreground hover:text-primary transition-colors duration-300";
+    return (
+      <button
+        onClick={(event) => {
+          scrollToSection(id);
+          !!isMobileMenu && callback && callback(event);
+        }}
+        className={isMobileMenu ? mobileMenuClasses : classes}
+        data-testid='nav-home'
+      >
+        {title}
+      </button>
+    );
+  };
 
   return (
     <nav

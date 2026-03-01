@@ -20,46 +20,6 @@ type ServiceItemType = {
   backgroundColor: string;
 };
 
-const ServiceItem: React.FC<ServiceItemProps> = ({ service }) => {
-  const { id, backgroundColor, Icon, title, description, price } = service;
-  return (
-    <div
-      className='bg-card rounded-2xl p-2 md:p-8 shadow-lg card-hover'
-      data-testid={`service-card-${id}`}
-    >
-      <div
-        className={`${backgroundColor} text-white rounded-full w-10 h-10 md:w-16 md:h-16 flex items-center justify-center mb-2 md:mb-6 mx-auto`}
-      >
-        <Icon size={32} />
-      </div>
-      <h3
-        className='text-md md:text-xl font-bold text-foreground text-center mb-2 md:mb-4'
-        data-testid={`service-title-${id}`}
-      >
-        {title}
-      </h3>
-      <p
-        className='text-muted-foreground text-center mb-4 md:mb-6 leading-relaxed'
-        data-testid={`service-description-${id}`}
-      >
-        {description}
-      </p>
-      {price && (
-        <div className='text-center'>
-          <span
-            className='text-2xl font-bold text-primary'
-            data-testid={`service-price-${id}`}
-          >
-            {price}
-          </span>
-          <span className='text-muted-foreground text-sm block'>
-            per session
-          </span>
-        </div>
-      )}
-    </div>
-  );
-};
 export default function Services() {
   const SERVICES = [
     {
@@ -117,6 +77,47 @@ export default function Services() {
       backgroundColor: "bg-accent",
     },
   ];
+
+  const ServiceItem: React.FC<ServiceItemProps> = ({ service }) => {
+    const { id, backgroundColor, Icon, title, description, price } = service;
+    return (
+      <div
+        className='bg-card rounded-2xl p-2 md:p-8 shadow-lg card-hover'
+        data-testid={`service-card-${id}`}
+      >
+        <div
+          className={`${backgroundColor} text-white rounded-full w-10 h-10 md:w-16 md:h-16 flex items-center justify-center mb-2 md:mb-6 mx-auto`}
+        >
+          <Icon size={32} />
+        </div>
+        <h3
+          className='text-md md:text-xl font-bold text-foreground text-center mb-2 md:mb-4'
+          data-testid={`service-title-${id}`}
+        >
+          {title}
+        </h3>
+        <p
+          className='text-muted-foreground text-center mb-4 md:mb-6 leading-relaxed'
+          data-testid={`service-description-${id}`}
+        >
+          {description}
+        </p>
+        {price && (
+          <div className='text-center'>
+            <span
+              className='text-2xl font-bold text-primary'
+              data-testid={`service-price-${id}`}
+            >
+              {price}
+            </span>
+            <span className='text-muted-foreground text-sm block'>
+              per session
+            </span>
+          </div>
+        )}
+      </div>
+    );
+  };
 
   return (
     <section
