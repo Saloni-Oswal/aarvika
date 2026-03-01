@@ -21,6 +21,18 @@ interface ContactFormData {
   message: string;
 }
 
+interface ContactItemProps {
+  contact: ContactItemType;
+}
+
+type ContactItemType = {
+  id: string;
+  Icon: typeof MapPin | typeof Phone | typeof Mail | typeof Clock;
+  title: string;
+  content: Array<string>;
+  backgroundColor: string;
+};
+
 export default function Contact() {
   const { toast } = useToast();
   const [formData, setFormData] = useState<ContactFormData>({
@@ -125,37 +137,77 @@ export default function Contact() {
 
   const CONTACT_INFO = [
     {
-      icon: MapPin,
+      id: "Location",
+      Icon: MapPin,
       title: "Location",
       content: [
         "Laxmi Nivas",
         "Ground Floor, Near Vighnaharta Ganpati Mandir,",
         "Gangapur Rd., Nashik",
       ],
-      bgColor: "bg-primary",
+      backgroundColor: "bg-primary",
     },
     {
-      icon: Phone,
+      id: "Phone",
+      Icon: Phone,
       title: "Phone",
       content: ["Main: +91 9421693111", "Emergency: +91 0000000000"],
-      bgColor: "bg-accent",
+      backgroundColor: "bg-accent",
     },
     {
-      icon: Mail,
+      id: "Email",
+      Icon: Mail,
       title: "Email",
       content: ["rashmi.bafana@gmail.com"],
-      bgColor: "bg-primary",
+      backgroundColor: "bg-primary",
     },
     {
-      icon: Clock,
+      id: "Hours",
+      Icon: Clock,
       title: "Hours",
       content: [
         "Monday - Saturday: 10:00 AM - 1:00 PM | 5:00 PM - 9:00 PM",
         "Sunday: Closed",
       ],
-      bgColor: "bg-accent",
+      backgroundColor: "bg-accent",
     },
   ];
+
+  const ContactItem: React.FC<ContactItemProps> = ({ contact }) => {
+    const { id, Icon, title, content, backgroundColor } = contact;
+    return (
+      <div
+        key={id}
+        className='flex items-start'
+        data-testid={`contact-info-${id}`}
+      >
+        <div
+          className={`${backgroundColor} text-white rounded-full p-2 md:p-3 mr-3 md:mr-4 md:mt-1`}
+        >
+          <Icon className='w-4 h-4 md:w-8 md:h-8' />
+        </div>
+        <div>
+          <h3
+            className='text-sm md:text-xl font-bold text-foreground md:mb-2'
+            data-testid={`contact-info-title-${id}`}
+          >
+            {title}
+          </h3>
+          <div className='text-muted-foreground leading-relaxed'>
+            {content.map((line, lineIndex) => (
+              <p
+                className='text-sm md:text-xl'
+                key={lineIndex}
+                data-testid={`contact-info-content-${id}-${lineIndex}`}
+              >
+                {line}
+              </p>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <section
@@ -181,37 +233,8 @@ export default function Contact() {
         </div>
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16'>
           <div className='space-y-4 md:space-y-8'>
-            {CONTACT_INFO.map((info, index) => (
-              <div
-                key={index}
-                className='flex items-start'
-                data-testid={`contact-info-${index}`}
-              >
-                <div
-                  className={`${info.bgColor} text-white rounded-full p-2 md:p-3 mr-3 md:mr-4 md:mt-1`}
-                >
-                  <info.icon className='w-4 h-4 md:w-8 md:h-8' />
-                </div>
-                <div>
-                  <h3
-                    className='text-sm md:text-xl font-bold text-foreground md:mb-2'
-                    data-testid={`contact-info-title-${index}`}
-                  >
-                    {info.title}
-                  </h3>
-                  <div className='text-muted-foreground leading-relaxed'>
-                    {info.content.map((line, lineIndex) => (
-                      <p
-                        className='text-sm md:text-xl'
-                        key={lineIndex}
-                        data-testid={`contact-info-content-${index}-${lineIndex}`}
-                      >
-                        {line}
-                      </p>
-                    ))}
-                  </div>
-                </div>
-              </div>
+            {CONTACT_INFO.map((contact) => (
+              <ContactItem key={contact.id} contact={contact}></ContactItem>
             ))}
           </div>
           <div className='bg-card rounded-2xl  p-4 md:p-8 shadow-lg'>
