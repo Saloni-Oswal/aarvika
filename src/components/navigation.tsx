@@ -7,17 +7,24 @@ type NavigationItemType = {
   id: string;
   title: string;
   isMobileMenu?: boolean;
+  callback?: React.MouseEventHandler<HTMLButtonElement>;
 };
 
-const NavigationItem = ({ id, title, isMobileMenu }: NavigationItemType) => {
+const NavigationItem = ({
+  id,
+  title,
+  isMobileMenu,
+  callback,
+}: NavigationItemType) => {
   const mobileMenuClasses =
     "block w-full text-left px-3 py-2 text-foreground hover:text-primary";
   const classes =
     "text-foreground hover:text-primary transition-colors duration-300";
   return (
     <button
-      onClick={() => {
+      onClick={(event) => {
         scrollToSection(id);
+        !!isMobileMenu && callback && callback(event);
       }}
       className={isMobileMenu ? mobileMenuClasses : classes}
       data-testid='nav-home'
@@ -40,11 +47,11 @@ export default function Navigation() {
 
   return (
     <nav
-      className='bg-card shadow-lg fixed w-full top-0 z-50'
+      className='bg-card shadow-lg fixed w-full top-0 z-50 h-20'
       data-testid='navigation'
     >
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-        <div className='flex justify-between items-center h-16'>
+        <div className='flex justify-between items-center h-20'>
           <div className='flex items-center'>
             <div className='max-w-[180px] max-h-[65px]' data-testid='logo'>
               <img src={`${BASE_URL}logo_2.jpg`} alt='Aarvika logo'></img>
@@ -83,6 +90,7 @@ export default function Navigation() {
                   id={id}
                   title={title}
                   isMobileMenu={true}
+                  callback={() => setIsMenuOpen(!isMenuOpen)}
                 ></NavigationItem>
               ))}
             </div>
