@@ -50,9 +50,7 @@ The application is organized into logical component sections:
 - **Hero**: Landing section with call-to-action buttons
 - **About**: Clinic information and mission statement
 - **Services**: Service offerings with pricing and descriptions
-- **Team**: Staff profiles and qualifications
 - **Testimonials**: Patient reviews and feedback
-- **Booking**: Appointment booking form with service selection
 - **Contact**: Contact form and clinic information
 - **Footer**: Site links and social media integration
 
@@ -84,8 +82,6 @@ The application implements a comprehensive design system using:
 
 ### State Management and Forms
 
-- **TanStack React Query**: Server state management and caching
-- **React Hook Form**: Performant form library with minimal re-renders
 - **@hookform/resolvers**: Form validation resolvers
 - **Zod**: Schema validation for type-safe data handling
 
@@ -94,7 +90,6 @@ The application implements a comprehensive design system using:
 - **ESBuild**: Fast JavaScript bundler for production builds
 - **PostCSS**: CSS processing with Autoprefixer
 - **TSX**: TypeScript execution for development
-- **Wouter**: Lightweight router for React applications
 
 ### Third-party Integrations
 
