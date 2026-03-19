@@ -38,10 +38,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer
-      className='bg-foreground text-background py-16'
-      data-testid='footer'
-    >
+    <footer className='bg-primary text-background py-16' data-testid='footer'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <div className='grid grid-cols-1 md:grid-cols-4 gap-8'>
           <div className='md:col-span-2'>
@@ -49,7 +46,7 @@ export default function Footer() {
               <img src={`${BASE_URL}logo_2.jpg`} alt='Aarvika logo'></img>
             </div>
             <p
-              className='text-background/80 mb-6 leading-relaxed'
+              className='text-background mb-6 leading-relaxed'
               data-testid='footer-description'
             >
               Professional physiotherapy services dedicated to helping you
@@ -62,7 +59,7 @@ export default function Footer() {
                   key={index}
                   href={social.href}
                   target='_blank'
-                  className='bg-primary text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-primary/80 transition-colors duration-300'
+                  className='bg-primary text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-foreground/80 transition-colors duration-300'
                   data-testid={`social-link-${index}`}
                 >
                   <social.icon size={20} />
@@ -82,7 +79,7 @@ export default function Footer() {
                 <li key={index}>
                   <button
                     onClick={() => scrollToSection(link.section)}
-                    className='text-background/80 hover:text-primary transition-colors duration-300 text-left'
+                    className='text-background transition-colors duration-300 text-left'
                     data-testid={`quick-link-${index}`}
                   >
                     {link.name}
@@ -100,7 +97,7 @@ export default function Footer() {
                 <li key={index}>
                   <button
                     onClick={() => scrollToSection("services")}
-                    className='text-background/80 hover:text-primary transition-colors duration-300 text-left'
+                    className='text-background transition-colors duration-300 text-left'
                     data-testid={`service-link-${index}`}
                   >
                     {service}
