@@ -43,7 +43,7 @@ export default function Contact() {
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const FORMSPREE_ENDPOINT = "https://formspree.io/f/xpwywaov";
+  const FORMSPREE_ENDPOINT = "https://formspree.io/f/xreyddlv";
 
   const handleContact = async (data: ContactFormData) => {
     setIsSubmitting(true);
@@ -151,14 +151,17 @@ export default function Contact() {
       id: "Phone",
       Icon: Phone,
       title: "Phone",
-      content: ["Main: +91 9421693111", "Emergency: +91 0000000000"],
+      content: ["Primary: +91 9421693111", "Emergency: +91 0000000000"],
       backgroundColor: "bg-accent",
     },
     {
       id: "Email",
       Icon: Mail,
       title: "Email",
-      content: ["rashmi.bafana@gmail.com"],
+      content: [
+        "Primary: aarvikaphysio18@gmail.com",
+        "Secondary: rashmi.bafana@gmail.com",
+      ],
       backgroundColor: "bg-primary",
     },
     {
