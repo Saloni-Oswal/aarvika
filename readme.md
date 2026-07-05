@@ -2,7 +2,7 @@
 
 ## Overview
 
-Aarvika Physiotherapy Clinic is a modern, responsive web application for a physiotherapy practice. The application serves as a comprehensive digital presence for the clinic, featuring a landing page with multiple sections including services, team information, testimonials, appointment booking, and contact functionality. The system is built as a full-stack application with a React-based frontend and Express.js backend, designed to facilitate patient engagement and appointment management.
+Aarvika Physiotherapy Clinic is a modern, responsive single-page web application for a physiotherapy practice in Nashik, India. The site serves as the clinic's digital presence, presenting the doctor, services, patient testimonials, and clinic contact information, and letting visitors send a message through a contact form. The app is a frontend-only static site built with React and Vite, and is deployed to GitHub Pages.
 
 ## User Preferences
 
@@ -14,54 +14,35 @@ Preferred communication style: Simple, everyday language.
 
 The client-side application is built using React with TypeScript and follows a component-based architecture. The application uses:
 
-- **React Router**: Implemented with wouter for lightweight client-side routing
-- **Styling**: Tailwind CSS with shadcn/ui component library for consistent design system
-- **State Management**: TanStack React Query for server state management and data fetching
-- **Form Handling**: React Hook Form with Zod validation for type-safe form processing
-- **UI Components**: Comprehensive component library based on Radix UI primitives
+- **Routing**: wouter for lightweight client-side routing (two real routes — `/` and `/aarvika` — plus a 404 page)
+- **Styling**: Tailwind CSS with a shadcn/ui-style component library and CSS variables for theming
+- **Forms**: native React `useState` for local form state, with submissions sent to a Formspree endpoint
+- **Toasts**: Radix Toast primitives wrapped by a local `useToast` hook for success / error feedback
+- **Reviews**: `react-google-reviews` (Featurable widget) to embed live Google reviews inside the Testimonials section
+- **UI Components**: small set of Radix-based components (button, input, textarea, label, select, card, toast, tooltip, toaster)
 
-The frontend is structured as a single-page application with multiple sections (Hero, About, Services, Team, Testimonials, Booking, Contact) all rendered on the home page, utilizing smooth scrolling navigation between sections.
-
-### Backend Architecture
-
-The server-side application follows a RESTful API design pattern built with Express.js:
-
-- **Framework**: Express.js with TypeScript for type safety
-- **Data Storage**: In-memory storage implementation with interface for future database integration
-- **API Endpoints**: RESTful endpoints for appointments and contact messages
-- **Validation**: Zod schemas for request validation and type safety
-- **Development Setup**: Vite integration for development with HMR support
-
-### Database Design
-
-The application uses Drizzle ORM with PostgreSQL schema definitions for three main entities:
-
-- **Users**: Basic user management with username/password authentication
-- **Appointments**: Patient appointment booking with service type, preferred timing, and medical condition fields
-- **Contact Messages**: Contact form submissions with name, email, subject, and message
-
-Currently implemented with in-memory storage but architected for easy migration to PostgreSQL database.
+The frontend is structured as a single-page application with multiple sections (Navigation, Hero, About, Services, Testimonials, Contact, Footer) all rendered on the home page, utilizing smooth-scrolling navigation between sections.
 
 ### Component Structure
 
 The application is organized into logical component sections:
 
-- **Navigation**: Fixed header with smooth scroll navigation
+- **Navigation**: Fixed header with smooth-scroll navigation and a mobile menu
 - **Hero**: Landing section with call-to-action buttons
-- **About**: Clinic information and mission statement
-- **Services**: Service offerings with pricing and descriptions
-- **Testimonials**: Patient reviews and feedback
-- **Contact**: Contact form and clinic information
+- **About** ("Know Your Doctor"): Doctor bio, photo, mission statement, and feature highlights
+- **Services**: Six service offerings with descriptions
+- **Testimonials**: Patient reviews in a carousel, a "View on Google" link, and a live Google reviews widget
+- **Contact**: Clinic contact information and a contact form
 - **Footer**: Site links and social media integration
 
 ### Styling System
 
-The application implements a comprehensive design system using:
+The application implements a clean design system using:
 
 - **Tailwind CSS**: Utility-first CSS framework for rapid styling
-- **CSS Variables**: Dynamic theming with light/dark mode support
-- **Custom Fonts**: Google Fonts integration (Century Gothic, DM Sans, Fira Code, Geist Mono)
-- **Component Variants**: Class variance authority for consistent component styling
+- **CSS Variables**: Dynamic theming with light/dark mode variables defined
+- **Custom Fonts**: "Century Gothic", downloaded at build time via `vite-plugin-webfont-dl`
+- **Component Variants**: Class Variance Authority for consistent component styling
 - **Responsive Design**: Mobile-first approach with responsive breakpoints
 
 ## External Dependencies
@@ -69,30 +50,33 @@ The application implements a comprehensive design system using:
 ### Core Framework Dependencies
 
 - **React 18**: Frontend framework with hooks and modern features
-- **TypeScript**: Type safety across frontend and backend
-- **Vite**: Build tool and development server with HMR
+- **TypeScript**: Type safety across the application
+- **Vite 5**: Build tool and development server with HMR
 
 ### UI and Styling
 
 - **Tailwind CSS**: Utility-first CSS framework
 - **Radix UI**: Headless UI component primitives
-- **shadcn/ui**: Pre-built component library based on Radix UI
+- **shadcn/ui** (style): Pre-built component patterns based on Radix UI
 - **Lucide React**: Icon library for consistent iconography
 - **Class Variance Authority**: Utility for component variant management
+- **clsx** + **tailwind-merge**: Class name composition helpers
 
-### State Management and Forms
+### Forms & Integrations
 
-- **@hookform/resolvers**: Form validation resolvers
-- **Zod**: Schema validation for type-safe data handling
+- **Formspree**: Handles contact-form submissions (no backend of our own)
+- **react-google-reviews**: Renders the Featurable-powered Google reviews widget
 
 ### Development and Build Tools
 
-- **ESBuild**: Fast JavaScript bundler for production builds
-- **PostCSS**: CSS processing with Autoprefixer
-- **TSX**: TypeScript execution for development
+- **PostCSS** + **Autoprefixer**: CSS processing
+- **ESBuild**: Fast JavaScript bundler (used internally by Vite)
+- **TSX**: TypeScript execution for development scripts
+- **vite-plugin-webfont-dl**: Downloads Google Fonts at build time
 
-### Third-party Integrations
+### Deployment
 
-- **CMDK**: Command palette component for enhanced UX
+- **gh-pages**: Publishes the `dist/` output to the `gh-pages` branch
+- The site is published at `https://saloni-oswal.github.io/aarvika/`. Run `npm run deploy` to build and publish.
 
-The application is architected for scalability with clear separation of concerns, type safety throughout the stack, and a modular component structure that facilitates easy maintenance and feature additions.
+The application is a small, single-page static site focused on a clear, responsive landing-page experience — with smooth-scrolling section navigation, a Formspree-backed contact form, and a live Google reviews widget — built and deployed as static assets.
